@@ -8,7 +8,14 @@ import help from '../assets/icons/help.svg'
 import pin from '../assets/icons/pin.svg'
 import at from '../assets/icons/at.svg'
 import styles from '../styles/chatHeader.module.css'
+import LogoutButton from './LogoutButton'
+import { useAuth0 } from "@auth0/auth0-react";
+
+
+
 const ChatHeader = () => {
+    const { user } = useAuth0();
+
     return (
         <div className={styles.chatHeader}>
             <div className={styles.roomNameContainer}>
@@ -16,8 +23,12 @@ const ChatHeader = () => {
                 <h3 className={styles.title}>Room Name</h3>
                 <div className={styles.chatHeaderStatus} id='online' />
             </div>
+            <img height={40} style={{ borderRadius: "10px" }} src={user.picture} />
             <div className={styles.connectWallet}>
-                Connect Wallet
+                {/* Connect Wallet */}
+                <div>
+                </div>
+                <LogoutButton />
             </div>
         </div>
     )
