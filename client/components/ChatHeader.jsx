@@ -10,6 +10,8 @@ import at from '../assets/icons/at.svg'
 import styles from '../styles/chatHeader.module.css'
 import LogoutButton from './LogoutButton'
 import { useAuth0 } from "@auth0/auth0-react";
+// import buttonStyles from '../styles/RoomAvatar.module.css'
+
 
 
 
@@ -23,7 +25,9 @@ const ChatHeader = () => {
                 <h3 className={styles.title}>Room Name</h3>
                 <div className={styles.chatHeaderStatus} id='online' />
             </div>
-            <img height={40} style={{ borderRadius: "50%", marginRight: "5px" }} src={user.picture} />
+            <div>
+                <img height={40} draggable={false} style={{ borderRadius: "50%", marginRight: "5px" }} src={user.picture} />
+            </div>
             <div className={styles.connectWallet}>
                 {/* Connect Wallet */}
                 <div>
