@@ -23,7 +23,7 @@ const ChatHeader = () => {
                 <h3 className={styles.title}>Room Name</h3>
                 <div className={styles.chatHeaderStatus} id='online' />
             </div>
-            <img height={40} style={{ borderRadius: "10px" }} src={user.picture} />
+            <img height={40} style={{ borderRadius: "50%", marginRight: "5px" }} src={user.picture} />
             <div className={styles.connectWallet}>
                 {/* Connect Wallet */}
                 <div>

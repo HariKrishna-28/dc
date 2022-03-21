@@ -12,7 +12,9 @@ const LoginButton = () => {
                 className={styles.connectWallet}
                 onClick={loginWithRedirect}
             >
-                Login
+                <p className={styles.title}>
+                    Login
+                </p>
             </button>
         )
     )

@@ -13,7 +13,9 @@ const LogoutButton = () => {
                 style={{ width: "130px", outline: "none", border: "0" }}
                 className={styles.connectWallet}
                 onClick={logout}>
-                Log Out
+                <p className={styles.title}>
+                    Log Out
+                </p>
             </button>
         )
     )
