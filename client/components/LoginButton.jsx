@@ -5,6 +5,9 @@ import styles from '../styles/chatHeader.module.css'
 
 const LoginButton = () => {
     const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+
+    
     return (
         !isAuthenticated && (
             <button

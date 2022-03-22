@@ -9,9 +9,9 @@ export const userSchema = {
       title: 'Name',
     },
     {
-      name: 'walletAddress',
+      name: 'email',
       type: 'string',
-      title: 'Wallet Address',
+      title: 'Email Address',
     },
     {
       name: 'profileImage',
