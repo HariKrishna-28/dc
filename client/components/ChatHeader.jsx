@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 import personPlus from '../assets/icons/person-plus.svg'
 import video from '../assets/icons/video.svg'
@@ -10,13 +10,15 @@ import at from '../assets/icons/at.svg'
 import styles from '../styles/chatHeader.module.css'
 import LogoutButton from './LogoutButton'
 import { useAuth0 } from "@auth0/auth0-react";
+import { ChatContext } from '../context/context'
 // import buttonStyles from '../styles/RoomAvatar.module.css'
 
 
 
 
 const ChatHeader = () => {
-    const { user } = useAuth0();
+    // const { user } = useContext(ChatContext)
+    const { user } = useAuth0()
 
     return (
         <div className={styles.chatHeader}>

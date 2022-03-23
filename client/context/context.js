@@ -1,13 +1,14 @@
 import React, { createContext, useState, useEffect, useReducer } from "react";
 import { useRouter } from "next/router";
-import Gun from "gun";
+// import Gun from "gun";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export const ChatContext = createContext();
 
 const baseUrl = "http://localhost:5000";
 
-const gun = Gun([baseUrl]);
+// const gun = Gun([baseUrl]);
+const initialState = { messages: [] };
 
 const reducer = (state, action) => {
   try {
@@ -30,11 +31,11 @@ export const ChatContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
 
   useEffect(async () => {
-    if (!isAuthenticated) return;
+    // if (!isAuthenticated) return;
     try {
-      const currentAccount = user;
+      // const currentAccount = user;
       const response = await fetch(
-        `http://localhost:3000/api/getCurrentUserData?account=${currentAccount}`
+        `http://localhost:3000/api/getCurrentUserData?account=${user?.email}`
       );
       const data = await response.json();
       console.log(data);
@@ -42,7 +43,7 @@ export const ChatContextProvider = ({ children }) => {
     } catch (error) {
       console.error(error);
     }
-  }, isAuthenticated);
+  }, [user, isAuthenticated]);
 
   return (
     <ChatContext.Provider

@@ -11,8 +11,6 @@ const ChatDashboard = () => {
             <div className={styles.main}>
                 <ConversationList />
                 <ChatView />
-                {/* <ConversationList />
-        <ChatView /> */}
             </div>
         </div>
     )
