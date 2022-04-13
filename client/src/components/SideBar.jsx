@@ -9,6 +9,8 @@ import avatar2 from '../assets/avatar-2.png'
 import avatar3 from '../assets/avatar-3.webp'
 import avatar4 from '../assets/avatar-4.webp'
 import RoomAvatar from './RoomAvatar'
+import getChannels from '../api/getchannels'
+import LoadScreen from './LoadScreen'
 
 const dummyChannels = [
     {
@@ -35,17 +37,33 @@ const dummyChannels = [
 
 const SideBar = () => {
     // const router = useRouter()
-    const [channels, setChannels] = useState(dummyChannels)
+    const [channels, setChannels] = useState([])
+    const [load, setLoad] = useState(true)
+
+    useEffect(async () => {
+        try {
+            const response = await getChannels()
+            setChannels(response)
+            console.log(response)
+            setLoad(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
+
     return (
         <div className={styles.wrapper}>
-            {channels.map((channel, index) => (
-                <RoomAvatar
-                    key={index}
-                    id={channel.id}
-                    avatar={channel.avatar}
-                    name={channel.name}
-                />
-            ))}
+            {!load ?
+                channels?.map((channel, index) => (
+                    <RoomAvatar
+                        key={index}
+                        id={channel.roomId}
+                        avatar={channel.image}
+                        name={channel.roomName}
+                    />
+                ))
+                :
+                <LoadScreen />}
         </div>
     )
 }

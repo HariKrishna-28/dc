@@ -8,6 +8,8 @@ import avatar2 from '../assets/avatar-2.png'
 import avatar3 from '../assets/avatar-3.webp'
 import avatar4 from '../assets/avatar-4.webp'
 import DmCard from './DmCard'
+import getChannels from '../api/getchannels'
+import getDms from '../api/getdms'
 // import DmCard from './DmCard'
 
 const dummyDm = [
@@ -35,7 +37,20 @@ const dummyDm = [
 
 
 const ConversationList = () => {
-    const [dm, setDm] = useState(dummyDm)
+    const [dm, setDm] = useState([])
+    const [load, setLoad] = useState(true)
+
+    useEffect(async () => {
+        try {
+            const response = await getDms()
+            setDm(response)
+            console.log(response)
+            setLoad(false)
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
+
     return (
         <div className={styles.conversations}>
             <div className={styles.conversationListTop}>
@@ -59,6 +74,7 @@ const ConversationList = () => {
                 <div className={styles.elementsContainer}>
                     <div className={styles.scgContainer}>
                         <img
+                            draggable={false}
                             height={25}
                             width={25}
                             src={nitro}
@@ -74,11 +90,11 @@ const ConversationList = () => {
                         return (
                             <DmCard
                                 key={index}
-                                name={dm.name}
-                                id={dm.id}
+                                name={dm.conversation.name}
+                                id={dm.conversation.email}
                                 status='online'
                                 avatar={
-                                    dm.avatar ||
+                                    dm.image ||
                                     'https://encrypted-tbn0.gstatic.com/imgs?q=tbn:ANd9GcS3OCSMFIW5fZ3vSN6yGpD-w-6SsL2_ZPA_sw&usqp=CAU'
                                 }
                             />

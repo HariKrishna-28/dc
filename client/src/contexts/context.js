@@ -40,11 +40,10 @@ export const ChatProvider = ({ children }) => {
 
   const createUserAccount = async () => {
     if (!isAuthenticated) return;
-    console.log(isAuthenticated);
 
     try {
-      createUser(user);
-      // console.log(res);
+      const response = await createUser(user);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -84,12 +83,10 @@ export const ChatProvider = ({ children }) => {
     // }
   };
 
-  //   console.log(isAuthenticated);
-  //   console.log(user);
-
   useEffect(() => {
     createUserAccount();
   }, [user]);
+
   return (
     <chatContext.Provider value={{ user }}>{children}</chatContext.Provider>
   );

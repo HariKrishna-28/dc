@@ -8,12 +8,13 @@ const RoomAvatar = ({ id, avatar, name }) => {
 
     const changeUrl = () => {
         navigate(`?channel=${id}&name=${name}`)
-        console.log("hi")
     }
+
     return (
         <div className={styles.wrapper} onClick={changeUrl}>
             <div className={styles.roomAvatar}>
                 <img
+                    draggable={false}
                     src={avatar}
                     className={styles.roomAvatarImage}
                     height={48}

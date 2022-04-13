@@ -1,6 +1,6 @@
 import { client } from "../lib/client";
 
-const createUser = async (data, res) => {
+const createUser = (data) => {
   // console.log(data);
 
   const userDoc = {
@@ -10,15 +10,16 @@ const createUser = async (data, res) => {
     email: data.email,
     profileimage: data.picture,
   };
-  console.log(userDoc);
-  try {
-    const res = await client.createIfNotExists(userDoc);
-    console.log(res);
-    // res.status(200).send("Successful");
-  } catch (error) {
-    console.error(error);
-    // res.status(500).send(error);
-  }
+
+  return client.createIfNotExists(userDoc);
+  // try {
+  //   const res = await client.createIfNotExists(userDoc);
+  //   console.log(res);
+  //   // res.status(200).send("Successful");
+  // } catch (error) {
+  //   console.error(error);
+  //   // res.status(500).send(error);
+  // }
 };
 
 export default createUser;
