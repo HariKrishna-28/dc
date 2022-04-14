@@ -1,12 +1,15 @@
-import { createContext, useReducer, useState, useEffect } from "react";
+import React, { createContext, useReducer, useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Gun from "gun";
 import { useAuth0 } from "@auth0/auth0-react";
 import createUser from "../api/createUser";
+import { useLocation } from "react-router-dom";
+import getCurrentUserData from "../api/getCurrentUserData";
 
-export const chatContext = createContext();
+export const ChatContext = createContext();
 
 // const gun = Gun([process.env.REACT_APP_SERVER_URL]);
+const gun = Gun([`${process.env.REACT_APP_SERVER_URL}/gun`]);
 
 const initialState = { messages: [] };
 
@@ -38,6 +41,11 @@ export const ChatProvider = ({ children }) => {
   //   }
   // }
 
+  const useQuery = () => {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  };
+
   const createUserAccount = async () => {
     if (!isAuthenticated) return;
 
@@ -48,46 +56,64 @@ export const ChatProvider = ({ children }) => {
       console.log(error);
     }
 
+    // const userId = `${user.email.slice(0, user.email.indexOf("@"))}-user`;
     // try {
-    //   const data = {
-    //     Name: user.name,
-    //     "Email Address": user.email,
-    //     "Profile Image": user.picture,
-    //   };
-
-    //   try {
-    //     await fetch(`${process.env.REACT_APP_URL}/createuser`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(data),
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-
-    //   try {
-    //     await fetch(`${process.env.REACT_APP_URL}/createdm`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(data),
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
+    //   const response = await getCurrentUserData(user.email);
+    //   console.log(response);
     // } catch (error) {
-    //   console.error(error);
+    //   console.log(error);
     // }
+  };
+
+  const getMessages = () => {
+    const _name = window.pathname;
+    // const _roomId = router.query.id;
+    const messagesRef = gun.get(_name);
+
+    messagesRef.map().once((message) => {
+      dispatch({
+        type: "add",
+        data: {
+          sender: message.sender,
+          content: message.content,
+          avatar: message.avatar,
+          createdAt: message.createdAt,
+          messageId: message.messageId,
+        },
+      });
+    });
   };
 
   useEffect(() => {
     createUserAccount();
   }, [user]);
 
+  useEffect(() => {
+    console.log(window.location.search);
+    // const searchParam = new URLSearchParams(window.location.search);
+    // console.log(searchParam);
+    setRoomName(window.location.search);
+    dispatch({ type: "clear", data: {} });
+    setPlaceholder(`Message ${window.location.search}`);
+    setMessageText("");
+    getMessages();
+  }, [window.location.search]);
+
   return (
-    <chatContext.Provider value={{ user }}>{children}</chatContext.Provider>
+    <ChatContext.Provider
+      value={{
+        // currentAccount,
+        roomName,
+        setRoomName,
+        placeholder,
+        messageText,
+        setMessageText,
+        state,
+        gun,
+        currentUser,
+      }}
+    >
+      {children}
+    </ChatContext.Provider>
   );
 };

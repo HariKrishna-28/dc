@@ -44,7 +44,7 @@ const SideBar = () => {
         try {
             const response = await getChannels()
             setChannels(response)
-            console.log(response)
+            // console.log(response)
             setLoad(false)
         } catch (err) {
             console.log(err)

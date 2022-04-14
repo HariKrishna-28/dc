@@ -44,7 +44,7 @@ const ConversationList = () => {
         try {
             const response = await getDms()
             setDm(response)
-            console.log(response)
+            // console.log(response)
             setLoad(false)
         } catch (err) {
             console.log(err)

@@ -9,6 +9,8 @@ const DmCard = ({ name, status, avatar, id }) => {
         navigate(`?conversation=${id}&name=${name}`)
     }
 
+    console.log(window.location.search)
+
     return (
         <div className={styles.dmCard} onClick={changeUrl}>
             <div className={styles.dmAvatarContainer}>
